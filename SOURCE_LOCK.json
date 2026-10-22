@@ -1,0 +1,29 @@
+{
+  "fast_lio": {
+    "url": "https://github.com/Ericsii/FAST_LIO_ROS2",
+    "ref": "ros2",
+    "commit": "2fffc570a25d0df172720bac034fbdb6a13d2162",
+    "vendored": true
+  },
+  "ikd_tree": {
+    "url": "https://github.com/hku-mars/ikd-Tree",
+    "commit": "e2e3f4e9d3b95a9e66b1ba83dc98d4a05ed8a3c4",
+    "vendored": true
+  },
+  "livox_messages": {
+    "url": "https://github.com/Livox-SDK/livox_ros_driver2",
+    "commit": "21445540f0d100dc86a7e6df312dd70bbdb4afdf",
+    "files": [
+      "msg/CustomPoint.msg",
+      "msg/CustomMsg.msg"
+    ]
+  },
+  "experiment7": {
+    "url": "https://github.com/huokumo/experiment7",
+    "commit": "81833b8fbf3e633f7e4fafc677fd121ecc01c3ba"
+  },
+  "experiment5": {
+    "url": "https://github.com/huokumo/experiment5",
+    "commit": "807de9e2454d0c6bd7ab3067e6743acf429e19f9"
+  }
+}

@@ -1,0 +1,9 @@
+<?xml version="1.0"?>
+<package format="3">
+  <name>livox_ros_driver2</name><version>1.2.4</version>
+  <description>Official Livox message definitions only, for the Experiment8 simulator. No hardware SDK or driver executable.</description>
+  <maintainer email="course@example.invalid">Course Development</maintainer><license>MIT</license>
+  <buildtool_depend>ament_cmake</buildtool_depend><buildtool_depend>rosidl_default_generators</buildtool_depend>
+  <depend>std_msgs</depend><exec_depend>rosidl_default_runtime</exec_depend>
+  <member_of_group>rosidl_interface_packages</member_of_group>
+</package>

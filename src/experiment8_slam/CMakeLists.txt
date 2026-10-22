@@ -1,0 +1,6 @@
+cmake_minimum_required(VERSION 3.16)
+project(experiment8_slam)
+find_package(ament_cmake REQUIRED)
+install(PROGRAMS scripts/livox_adapter.py scripts/pose_bridge.py scripts/save_map.py DESTINATION lib/${PROJECT_NAME})
+install(DIRECTORY launch config DESTINATION share/${PROJECT_NAME})
+ament_package()

@@ -1,0 +1,79 @@
+Panels:
+  - Class: rviz_common/Displays
+    Name: Displays
+Visualization Manager:
+  Class: ""
+  Global Options:
+    Background Color: 35; 35; 40
+    Fixed Frame: camera_init
+    Frame Rate: 20
+  Displays:
+    - Class: rviz_default_plugins/Grid
+      Name: Grid
+      Enabled: true
+      Cell Size: 1
+      Plane Cell Count: 20
+      Offset:
+        Z: -1.3
+    - Class: rviz_default_plugins/TF
+      Name: TF
+      Enabled: false
+      Show Names: true
+    - Class: rviz_default_plugins/RobotModel
+      Name: R1 estimated pose
+      Enabled: true
+      Description Source: Topic
+      Description Topic:
+        Value: /robot_description
+        Durability Policy: Transient Local
+        Reliability Policy: Reliable
+    - Class: rviz_default_plugins/PointCloud2
+      Name: FAST-LIO map
+      Enabled: true
+      Topic:
+        Value: /Laser_map
+        Reliability Policy: Reliable
+        Durability Policy: Volatile
+        Depth: 2
+      Style: Points
+      Size (Pixels): 2
+      Color Transformer: AxisColor
+      Axis: Z
+      Position Transformer: XYZ
+      Decay Time: 0
+    - Class: rviz_default_plugins/PointCloud2
+      Name: Registered current scan
+      Enabled: false
+      Topic:
+        Value: /cloud_registered
+        Reliability Policy: Reliable
+        Durability Policy: Volatile
+      Style: Points
+      Size (Pixels): 3
+      Color Transformer: FlatColor
+      Color: 80; 255; 120
+      Position Transformer: XYZ
+      Decay Time: 0
+    - Class: rviz_default_plugins/Path
+      Name: FAST-LIO trajectory
+      Enabled: true
+      Topic:
+        Value: /path
+        Reliability Policy: Reliable
+        Durability Policy: Volatile
+      Color: 255; 90; 60
+      Line Style: Lines
+      Line Width: 0.05
+  Views:
+    Current:
+      Class: rviz_default_plugins/Orbit
+      Distance: 14
+      Pitch: 0.7
+      Yaw: 0.8
+      Focal Point:
+        X: 0
+        Y: 0
+        Z: 0
+Window Geometry:
+  Width: 1200
+  Height: 800

@@ -4,6 +4,7 @@ log/
 __pycache__/
 *.pyc
 maps/
+data/
 src/experiment5/
 src/experiment7/
 src/fast_lio/Log/*

@@ -15,4 +15,5 @@ apt-get install -y git build-essential cmake python3-colcon-common-extensions \
   ros-humble-std-srvs ros-humble-visualization-msgs \
   ros-humble-tf2-ros ros-humble-tf2-ros-py ros-humble-robot-state-publisher \
   ros-humble-launch-xml ros-humble-rviz2 ros-humble-ros2run \
-  ros-humble-ros2param ros-humble-ros2node
+  ros-humble-ros2param ros-humble-ros2node \
+  ros-humble-rosbag2 ros-humble-rosbag2-storage-default-plugins

@@ -6,7 +6,7 @@
 
 在前期工作中，项目组已完成激光点云采集与预处理，能够观察原始点云，比较过滤、裁剪、降采样和去噪的效果。现在需要继续解决一个问题：机器人运动时，每一帧点云都来自不同的位置，怎样把这些点云放到同一个坐标系中，逐步形成清晰的环境地图？
 
-项目负责人将激光建图与位姿调试任务交给你。你需要部署与实验七相同的仿真场景，将保留逐点时间的原始点云和IMU数据接入FAST-LIO，完成静止初始化，分段控制机器人前进与转向，并在RViz中同时观察机器人位置、当前点云、运动轨迹和三维地图。随后比较降采样参数对地图结构的影响，判断墙面是否重叠、立柱轮廓是否清楚、停车后的位姿是否稳定。
+项目负责人将激光建图与位姿调试任务交给你。你需要部署以实验七为基础、增加低平台的仿真场景，将保留逐点时间的原始点云和IMU数据接入FAST-LIO，完成静止初始化，分段控制机器人前进与转向，并在RViz中同时观察机器人位置、当前点云、运动轨迹和三维地图。随后比较降采样参数对地图结构的影响，判断墙面是否重叠、立柱轮廓是否清楚、停车后的位姿是否稳定。
 
 任务完成后，向项目组提交地图文件、运行参数、位姿记录、关键截图和实验报告，说明地图是怎样逐步形成的、运动过程中定位是否连续，以及参数调整带来了哪些变化。
 
@@ -68,7 +68,7 @@ RViz观察 → 参数比较 → 保存地图与实验记录
 
 | 文件或目录 | 用途 |
 | --- | --- |
-| `experiment8_v0.1.0_scaffold.zip` | 实验八工程初版教学包 |
+| `experiment8_teaching_20261103.zip` | 实验八完整教学包 |
 | `src/experiment5` | 部署时下载的R1模型资源 |
 | `src/experiment7` | 部署时下载的激光点云与IMU仿真工程 |
 | `src/experiment8_slam/launch/experiment8.launch.py` | 同时启动仿真、消息适配、FAST-LIO和RViz |
@@ -81,7 +81,7 @@ RViz观察 → 参数比较 → 保存地图与实验记录
 
 本实验使用Mid-360扫描模式的教学仿真，无需连接真实雷达或安装Livox SDK2。R1保持站姿进行平面移动。
 
-> 编制状态：本手册依据当前工程初版编写，尚待编译、运行及界面验证。下文为操作步骤和预期观察内容，不是已完成的测试结果。教学包目前通过文件分发，未设置Git下载地址；配图位置待实际运行后补充。
+> 验证状态：2026年11月3日已完成教学平台编译、运行、界面、三组参数和地图保存验证。教学包通过文件分发，未推送Git；本手册保留原有配图位置。详细实测结果见同目录的平台验证记录。
 
 ## 实验步骤
 
@@ -116,15 +116,15 @@ ign gazebo --versions
 
 ### 2、解压教学包并安装依赖
 
-（1）将配套文件 `experiment8_v0.1.0_scaffold.zip` 放到虚拟机的 `/root` 目录。此处使用当前分发的教学包，不填写尚未发布的下载链接。
+（1）将配套文件 `experiment8_teaching_20261103.zip` 放到虚拟机的 `/root` 目录。此处使用当前分发的教学包，不填写尚未发布的下载链接。
 
 （2）安装解压工具，将教学包解压并命名为实验工作区。以下操作用于初始环境中尚未存在 `/root/exp8` 的情况。
 
 ```bash
 apt install -y unzip
 cd /root
-unzip experiment8_v0.1.0_scaffold.zip
-mv /root/experiment8 /root/exp8
+mkdir -p /root/exp8
+unzip experiment8_teaching_20261103.zip -d /root/exp8
 cd /root/exp8
 ```
 
@@ -152,14 +152,14 @@ apt install -y ros-humble-rosbag2 ros-humble-rosbag2-storage-default-plugins
 
 ### 3、准备资源并构建工程
 
-（1）下载固定版本的实验五模型与实验七仿真资源。
+（1）检查教学包中的固定版本模型与仿真资源。
 
 ```bash
 cd /root/exp8
 bash tools/prepare_workspace.sh
 ```
 
-脚本将资源分别放入 `src/experiment5` 和 `src/experiment7`，无需另外运行实验五或实验七的启动文件。
+完整教学包已包含 `src/experiment5` 和 `src/experiment7`。脚本核对资源文件，无需再次下载，也无需另外运行实验五或实验七的启动文件。
 
 （2）创建结果目录并编译。
 
@@ -186,7 +186,7 @@ export PYTHONNOUSERSITE=1
 （1）用VS Code打开工程。
 
 ```bash
-code /root/exp8
+code --no-sandbox --user-data-dir /root/exp8/data/vscode /root/exp8
 ```
 
 （2）查看 `src/experiment8_slam/launch/experiment8.launch.py` 和 `scripts/livox_adapter.py`，结合下表认识数据流。
@@ -226,7 +226,7 @@ ros2 launch experiment8_slam experiment8.launch.py map_path:=/root/exp8/maps/bas
 
 IMU初始化用于估计初始重力方向和相关状态。首次建图时先观察静止效果，再发送运动指令。
 
-（3）在Gazebo中找到R1、蓝色墙壁、立柱和箱体；在RViz中寻找相应的点云轮廓。
+（3）在Gazebo中找到R1、蓝色墙壁、立柱、箱体和两处棕色低平台；在RViz中寻找相应的点云轮廓。
 
 > 图4（待补）：Gazebo场景与静止初始化后的RViz地图并排显示，标出蓝墙、立柱等对应结构。
 
@@ -300,10 +300,12 @@ camera_init → body → base_link → lidar_frame → imu_frame
 
 ### 8、分段前进，观察地图更新
 
+本实验的运动时长按仿真时钟计时，指令结束自动停车。界面运行较慢时，等待的现实时间可能增加。
+
 （1）终端1保持运行，在终端2发送一次短距离前进指令。
 
 ```bash
-ros2 run experiment7_lidar drive_for.py --vx 0.15 --seconds 2
+ros2 run experiment8_slam drive_for.py --vx 0.15 --seconds 2
 ```
 
 `--vx` 为前进速度，单位为m/s；`--seconds` 为发送指令的时间。指令结束后程序发送零速度。
@@ -333,7 +335,7 @@ ros2 topic echo /Odometry --once
 （1）发送一次原地转向指令。
 
 ```bash
-ros2 run experiment7_lidar drive_for.py --yaw-rate 0.3 --seconds 1
+ros2 run experiment8_slam drive_for.py --yaw-rate 0.3 --seconds 1
 ```
 
 `--yaw-rate` 为绕竖直轴的角速度，单位为rad/s。正值表示按本工程坐标约定向左转。
@@ -343,7 +345,7 @@ ros2 run experiment7_lidar drive_for.py --yaw-rate 0.3 --seconds 1
 （3）沿新的朝向短距离前进。
 
 ```bash
-ros2 run experiment7_lidar drive_for.py --vx 0.15 --seconds 2
+ros2 run experiment8_slam drive_for.py --vx 0.15 --seconds 2
 ```
 
 机器人沿自身前方移动；已经转向后，建图坐标系中的X、Y位置可能同时变化。结合轨迹拐点理解“机器人向前”与“地图坐标X增加”的区别。
@@ -391,7 +393,7 @@ ros2 topic echo /Odometry --once
 （2）打开参数文件。
 
 ```bash
-code /root/exp8/src/experiment8_slam/config/fastlio_sim.yaml
+code --no-sandbox --user-data-dir /root/exp8/data/vscode /root/exp8/src/experiment8_slam/config/fastlio_sim.yaml
 ```
 
 本组比较只修改 `filter_size_surf`，分别使用 `0.08`、`0.12` 和 `0.24`，保持 `filter_size_map`、运动指令和其他参数一致。保存文件后重新启动整套场景，使参数从启动时读入。

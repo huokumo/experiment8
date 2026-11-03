@@ -2,7 +2,7 @@
 
 本工程衔接实验7，沿用 R1 机器人、Mid-360 扫描方向仿真和室内场景，将原始三维点云与 IMU 接入 FAST-LIO，观察运动过程中的位姿、轨迹和三维地图，并保存点云地图。
 
-**当前状态：工程初版已创建，尚未完成编译和运行验证，未推送Git。** 后续验证任务见 [VALIDATION.md](VALIDATION.md)。本文中的显示现象是操作目标。
+**当前状态：已在教学平台完成编译、三组降采样参数、Gazebo/RViz、建图与位姿里程计、地图保存及数据录制验证，未推送Git。** 实测结果见 [平台验证记录](docs/PLATFORM_VALIDATION.md)。
 
 完整操作步骤、RViz观察要求和实验记录表见 [实验八指导手册](docs/STUDENT_GUIDE.md)。手册中的配图位置待实际运行后补充。
 
@@ -25,6 +25,8 @@
 
 实验7的无效点过滤、范围裁剪、降采样和去噪用于认识点云处理。本实验读取保留逐点时间的原始数据，由 FAST-LIO 完成其所需的内部处理。
 
+实验8在基础场景增加两处低平台，为高度估计提供可观测的水平面。
+
 本实验中的“定位”指持续运行时的激光惯性位姿估计。保存 PCD 后的重定位、回环优化及导航作为后续扩展。
 
 ## 工程内容
@@ -40,7 +42,7 @@
 | `SOURCE_LOCK.json` | 依赖来源及固定提交 |
 | `patches/fast_lio_integration.patch` | 相对上游的集成修改记录 |
 
-实验5与实验7在准备工作区时下载到 `src/experiment5` 和 `src/experiment7`，不重复收录在本仓库中。无需另行启动实验7的launch。
+实验5与实验7资源分别放在 `src/experiment5` 和 `src/experiment7`，完整教学ZIP已包含这些资源，并通过哈希校验；直接使用Git源码时仍按固定提交下载。无需另行启动实验7的launch。
 
 ## 从初始环境部署
 
@@ -70,11 +72,11 @@ ros2 launch experiment8_slam experiment8.launch.py map_path:=/root/exp8/maps/map
 source /opt/ros/humble/setup.bash
 source /root/exp8/install/setup.bash
 export PYTHONNOUSERSITE=1
-ros2 run experiment7_lidar drive_for.py --vx 0.15 --seconds 2
-ros2 run experiment7_lidar drive_for.py --yaw-rate 0.3 --seconds 1
+ros2 run experiment8_slam drive_for.py --vx 0.15 --seconds 2
+ros2 run experiment8_slam drive_for.py --yaw-rate 0.3 --seconds 1
 ```
 
-分别观察前进、转向和停车时，机器人模型、当前点云、累计地图及轨迹的变化。每条限时运动指令结束会发送零速度。
+分别观察前进、转向和停车时，机器人模型、当前点云、累计地图及轨迹的变化。运动时长使用仿真时钟计时，每条指令结束会发送零速度。
 
 保存当前地图：
 
@@ -83,7 +85,7 @@ ros2 run experiment8_slam save_map.py
 ls -lh /root/exp8/maps/map.pcd
 ```
 
-无图形界面时可用 `gui:=false rviz:=false` 启动；本工程当前尚未验证此启动结果。
+无图形界面时可用 `gui:=false rviz:=false` 启动；此模式已通过三组参数运行验证。
 
 ## 坐标与接口约定
 

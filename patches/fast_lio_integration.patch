@@ -42,7 +42,15 @@
  
 --- a/src/laserMapping.cpp
 +++ b/src/laserMapping.cpp
-@@ -580,17 +580,14 @@
+@@ -40,7 +40,6 @@
+ #include <csignal>
+ #include <chrono>
+ #include <unistd.h>
+-#include <Python.h>
+ #include <so3_math.h>
+ #include <rclcpp/rclcpp.hpp>
+ #include <Eigen/Core>
+@@ -580,17 +579,14 @@
  
  void publish_map(rclcpp::Publisher<sensor_msgs::msg::PointCloud2>::SharedPtr pubLaserCloudMap)
  {
@@ -68,7 +76,7 @@
  
      sensor_msgs::msg::PointCloud2 laserCloudmsg;
      pcl::toROSMsg(*pcl_wait_pub, laserCloudmsg);
-@@ -606,10 +603,15 @@
+@@ -606,10 +602,15 @@
      // pubLaserCloudMap->publish(laserCloudMap);
  }
  
@@ -86,7 +94,7 @@
  }
  
  template<typename T>
-@@ -631,7 +633,6 @@
+@@ -631,7 +632,6 @@
      odomAftMapped.child_frame_id = "body";
      odomAftMapped.header.stamp = get_ros_time(lidar_end_time);
      set_posestamp(odomAftMapped.pose);
@@ -94,7 +102,7 @@
      auto P = kf.get_P();
      for (int i = 0; i < 6; i ++)
      {
-@@ -643,6 +644,8 @@
+@@ -643,6 +643,8 @@
          odomAftMapped.pose.covariance[i*6 + 4] = P(k, 1);
          odomAftMapped.pose.covariance[i*6 + 5] = P(k, 2);
      }
@@ -103,7 +111,7 @@
  
      geometry_msgs::msg::TransformStamped trans;
      trans.header.frame_id = "camera_init";
-@@ -926,7 +929,7 @@
+@@ -926,7 +928,7 @@
          {
              sub_pcl_pc_ = this->create_subscription<sensor_msgs::msg::PointCloud2>(lid_topic, rclcpp::SensorDataQoS(), standard_pcl_cbk);
          }
@@ -112,7 +120,7 @@
          pubLaserCloudFull_ = this->create_publisher<sensor_msgs::msg::PointCloud2>("/cloud_registered", 20);
          pubLaserCloudFull_body_ = this->create_publisher<sensor_msgs::msg::PointCloud2>("/cloud_registered_body", 20);
          pubLaserCloudEffect_ = this->create_publisher<sensor_msgs::msg::PointCloud2>("/cloud_effected", 20);
-@@ -1117,9 +1120,13 @@
+@@ -1117,9 +1119,13 @@
          RCLCPP_INFO(this->get_logger(), "Saving map to %s...", map_file_path.c_str());
          if (pcd_save_en)
          {

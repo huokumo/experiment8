@@ -1,0 +1,59 @@
+{
+  "status": "PASS",
+  "parameter_dumps": {
+    "leaf_008": {
+      "filter_size_surf": 0.08,
+      "filter_size_map": 0.12,
+      "use_sim_time": true
+    },
+    "leaf_012": {
+      "filter_size_surf": 0.12,
+      "filter_size_map": 0.12,
+      "use_sim_time": true
+    },
+    "leaf_024": {
+      "filter_size_surf": 0.24,
+      "filter_size_map": 0.12,
+      "use_sim_time": true
+    }
+  },
+  "bag_topics": {
+    "/tf": {
+      "type": "tf2_msgs/msg/TFMessage",
+      "messages": 216
+    },
+    "/tf_static": {
+      "type": "tf2_msgs/msg/TFMessage",
+      "messages": 3
+    },
+    "/Odometry": {
+      "type": "nav_msgs/msg/Odometry",
+      "messages": 216
+    },
+    "/path": {
+      "type": "nav_msgs/msg/Path",
+      "messages": 21
+    },
+    "/livox/lidar": {
+      "type": "livox_ros_driver2/msg/CustomMsg",
+      "messages": 219
+    },
+    "/livox/imu": {
+      "type": "sensor_msgs/msg/Imu",
+      "messages": 8814
+    },
+    "/livox/points": {
+      "type": "sensor_msgs/msg/PointCloud2",
+      "messages": 220
+    },
+    "/clock": {
+      "type": "rosgraph_msgs/msg/Clock",
+      "messages": 44073
+    },
+    "/r1/ground_truth": {
+      "type": "nav_msgs/msg/Odometry",
+      "messages": 4128
+    }
+  },
+  "database_bytes": 27578368
+}

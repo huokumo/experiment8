@@ -1,6 +1,10 @@
 #!/usr/bin/env bash
 set -eo pipefail
 REPO=$(cd "$(dirname "$0")/.." && pwd)
+if [ -f "$REPO/BUNDLED_DEPENDENCIES.json" ]; then
+  python3 "$REPO/tools/verify_bundled_dependencies.py"
+  exit 0
+fi
 fetch_dependency() {
   local url=$1 revision=$2 target=$3
   if [ ! -e "$target" ]; then

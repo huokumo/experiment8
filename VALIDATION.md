@@ -4,4 +4,4 @@
 
 详细指标、问题修复、界面与范围见 [平台验证记录](docs/PLATFORM_VALIDATION.md)。
 
-未推送Git。实验中的定位为连续运行时的激光惯性位姿里程计，不包含保存地图后重启重定位。
+工程已发布至 [GitHub仓库](https://github.com/huokumo/experiment8)。实验中的定位为连续运行时的激光惯性位姿里程计，不包含保存地图后重启重定位。
